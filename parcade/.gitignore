@@ -1,0 +1,29 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+# Typescript v1 declaration files
+typings/
+
+# dotenv environment variables file
+.env
+
+# Firebase Service Account Key
+serviceAccountKey.json
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
