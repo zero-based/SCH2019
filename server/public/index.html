@@ -30,9 +30,9 @@
 
   <script>
     var socket = io();
-    socket.on("main", function (data) {
+    socket.on("newReservation", function (data) {
       console.log(data);
-      $("h1").text(data.text);
+      $("h1").text(data.id);
       $("body").css("background", data.color);
     });
   </script>
