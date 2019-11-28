@@ -20,23 +20,22 @@ const server = socket_io(
   })
 );
 
+initListeners();
+
 server.on("connection", socket => {
   console.log(`Socket ${socket.id} Connected.`);
-
-  startListening();
-
   server.on("disconnect", () => {
     console.log(`Socket ${socket.id} Disconnected.`);
   });
 });
 
-function startListening() {
+function initListeners() {
   db.collection("reservations").onSnapshot(
     querySnapshot => {
       querySnapshot.docChanges().forEach(change => {
         if (change.type === "added") {
           console.log("Added Reservation: ", change.doc.data());
-          server.emit("newReservation", {
+          server.sockets.emit("newReservation", {
             id: change.doc.id,
             color: "#" + (((1 << 24) * Math.random()) | 0).toString(16)
           });
