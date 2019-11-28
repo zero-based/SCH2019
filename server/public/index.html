@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Parc Server</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="container-fluid">
+
+  <div class="row h-100">
+    <div class="col text-center text-white my-auto">
+      <h1 id="text" class="display-1">...</h1>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    var socket = io();
+    socket.on("main", function (data) {
+      console.log(data);
+      $("h1").text(data.text);
+      $("body").css("background", data.color);
+    });
+  </script>
+
+</body>
+
+</html>
