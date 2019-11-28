@@ -19,6 +19,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# Firebase Service Account Key
+serviceAccountKey.json
+
 # Dependency directories
 node_modules/
 

@@ -23,6 +23,7 @@
   "homepage": "https://github.com/zero-based/SCH2019/tree/master/server",
   "dependencies": {
     "express": "^4.17.1",
+    "firebase-admin": "^8.8.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
