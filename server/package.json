@@ -1,0 +1,35 @@
+{
+  "name": "parc-server",
+  "version": "1.0.0",
+  "description": "Server to manage Parcades.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tslint --project tsconfig.json && tsc",
+    "serve": "npm run build && node -r dotenv/config ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zero-based/SCH2019.git"
+  },
+  "keywords": [
+    "smart-city-hackathon",
+    "parking-system"
+  ],
+  "author": "Zero-Based",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zero-based/SCH2019/issues"
+  },
+  "homepage": "https://github.com/zero-based/SCH2019/tree/master/server",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/socket.io": "^2.1.4",
+    "dotenv": "^8.2.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
+  }
+}
