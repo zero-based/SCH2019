@@ -6,6 +6,7 @@ import 'package:parc/widgets/parcade_modal.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user.dart';
+import 'account_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final User _user;
@@ -19,6 +20,20 @@ class HomeScreen extends StatelessWidget {
       child: MaterialApp(
         title: "Home",
         home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Parc'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccountScreen(_user),
+                  ),
+                ),
+              ),
+            ],
+          ),
           body: MapWidget(),
         ),
       ),
