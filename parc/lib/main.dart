@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parc/screens/trip_screen.dart';
 
 import 'blocs/authentication_bloc/bloc.dart';
 import 'screens/home_screen.dart';
@@ -28,7 +29,7 @@ class App extends StatelessWidget {
           if (state is Unauthenticated) {
             return SignInScreen();
           } else if (state is Authenticated) {
-            return HomeScreen(state.user);
+            return TripScreen();
           } else {
             return SplashScreen();
           }
