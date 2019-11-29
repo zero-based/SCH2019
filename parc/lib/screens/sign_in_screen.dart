@@ -100,7 +100,6 @@ class _SignInFormState extends State<_SignInForm> {
                   SizedBox(height: 48.0),
                   OutlinedTextField(
                     text: 'Email',
-                    keyboardType: TextInputType.number,
                     controller: _emailController,
                     validator: (_) =>
                         !state.isEmailValid ? "Incorrect Email" : null,
