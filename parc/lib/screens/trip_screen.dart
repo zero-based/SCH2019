@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parc/blocs/timer_bloc/bloc.dart';
+import 'package:parc/models/ticker.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../widgets/rounded_button.dart';
 
-class TripScreen extends StatefulWidget {
+class TripScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocProvider<TimerBloc>(
+        create: (context) => TimerBloc(Ticker()),
+        child: _TripScreen(),
+      ),
+    );
+  }
+}
+
+class _TripScreen extends StatefulWidget {
   @override
   _TripScreenState createState() => _TripScreenState();
 }
 
-class _TripScreenState extends State<TripScreen> {
+class _TripScreenState extends State<_TripScreen> {
   @override
   Widget build(BuildContext context) {
+    final TimerBloc _timerBloc = BlocProvider.of<TimerBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Trip"),
@@ -19,25 +34,35 @@ class _TripScreenState extends State<TripScreen> {
           Icons.close,
           color: Colors.white,
           size: 32,
-        )),
+        ), onPressed: () => _timerBloc.add(Reset()),),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Timer here',
-              style: TextStyle(fontSize: 32),
+            BlocBuilder(
+              bloc: _timerBloc,
+              builder: (context, state) {
+                final String minutesStr = ((state.duration / 60) % 60)
+                    .floor()
+                    .toString()
+                    .padLeft(2, '0');
+                final String secondsStr =
+                    (state.duration % 60).floor().toString().padLeft(2, '0');
+                return Text(
+                  '$minutesStr:$secondsStr',
+                  style: TextStyle(fontSize: 32),
+                );
+              },
             ),
             SizedBox(height: 60),
             RoundedButton(text: 'Open Google Maps', onPressed: _launchURL),
             SizedBox(height: 30),
             RoundedButton(
                 text: 'Lower Parcade',
-                onPressed: () {
-                  print('Presses');
-                }),
+                onPressed: () => _timerBloc.add(Start(duration: 15*60)),                  
+                ),
           ],
         ),
       ),
