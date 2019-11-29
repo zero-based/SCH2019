@@ -5,12 +5,14 @@ class User {
   String name;
   String email;
   String license;
+  String currentReservation;
 
   User({
     this.id,
     this.name,
     this.email,
     this.license,
+    this.currentReservation,
   });
 
   factory User.fromDocument(DocumentSnapshot doc) {
@@ -18,11 +20,12 @@ class User {
         id: doc['id'],
         name: doc['name'],
         email: doc['email'],
-        license: doc['license']);
+        license: doc['license'],
+        currentReservation: doc['currentReservation']);
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name, 'email': email, 'license': license};
+    return {'id': id, 'name': name, 'email': email, 'license': license, 'currentReservation': currentReservation};
   }
 
   @override
@@ -31,7 +34,8 @@ class User {
       id: $id,
       name: $name,
       email: $email,
-      license: $license
+      license: $license,
+      currentReservation: $currentReservation
     }''';
   }
 }
