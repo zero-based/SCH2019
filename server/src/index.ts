@@ -40,6 +40,7 @@ function initListeners() {
             color: "#" + (((1 << 24) * Math.random()) | 0).toString(16)
           });
         } else if (change.type === "modified") {
+          server.sockets.emit("arrival");
           console.log("Modified Reservation: ", change.doc.data());
         } else if (change.type === "removed") {
           console.log("Removed Reservation: ", change.doc.data());
