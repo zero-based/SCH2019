@@ -18,6 +18,7 @@ class UserRepository {
     String email,
     String password,
     String license,
+    String currentReservation
   }) async {
     // Account
     await _auth.createUserWithEmailAndPassword(
@@ -32,6 +33,7 @@ class UserRepository {
       name: name,
       email: email,
       license: license,
+      currentReservation: ""
     );
     return await docRef.setData(user.toMap());
   }
