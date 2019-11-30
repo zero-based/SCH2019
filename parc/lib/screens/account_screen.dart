@@ -76,7 +76,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     "${widget._user.balance} ¤",
                     style: TextStyle(
                       color: appThemeData[AppTheme.Gredient].primaryColorDark,
-                      fontSize: 64.0,
+                      fontSize: 40.0,
                       fontFamily: 'Almarai',
                       fontWeight: FontWeight.bold
                     ),

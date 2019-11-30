@@ -39,7 +39,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
   }
 
   Stream<ReservationState> _mapUpdateToState(Reservation reservation) async* {
-    if (reservation.arrivedOn == null) {
+    if (reservation.canceledOn != null) {
+      yield Free();
+    } else if (reservation.arrivedOn == null) {
       yield Reserved(reservation);
     } else if (reservation.leftOn == null) {
       yield Parked(reservation);
