@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parc/screens/trip_screen.dart';
 
 import 'blocs/authentication_bloc/bloc.dart';
+import 'blocs/map_bloc/bloc.dart';
 import 'screens/home_screen.dart';
 import 'screens/sign_in_screen.dart';
 import 'screens/splash_screen.dart';
@@ -13,7 +13,9 @@ void main() {
   BlocSupervisor.delegate = AppBlocDelegate();
   runApp(
     BlocProvider(
-      create: (context) => AuthenticationBloc()..add(AppStarted()),
+      create: (context) =>
+      AuthenticationBloc()
+        ..add(AppStarted()),
       child: App(),
     ),
   );
@@ -26,10 +28,17 @@ class App extends StatelessWidget {
       title: 'Parc',
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if (state is Unauthenticated) {
+          if (state is Authenticated) {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider<MapBloc>(
+                  create: (context) => MapBloc()..add(LoadCurrent()),
+                )
+              ],
+              child: HomeScreen(state.user),
+            );
+          } else if (state is Unauthenticated) {
             return SignInScreen();
-          } else if (state is Authenticated) {
-            return TripScreen();
           } else {
             return SplashScreen();
           }
