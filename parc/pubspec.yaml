@@ -21,6 +21,8 @@ dependencies:
   flutter_launcher_icons: ^0.7.0
   gradient_app_bar: ^0.0.1
   wave: ^0.0.8
+  flutter_typeahead: ^1.7.0
+
 
 flutter:
   uses-material-design: true

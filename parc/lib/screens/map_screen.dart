@@ -1,15 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:parc/blocs/areas_bloc/areas_bloc.dart';
+import 'package:parc/blocs/areas_bloc/areas_state.dart';
 import 'package:parc/blocs/map_bloc/bloc.dart';
 import 'package:parc/blocs/reservation_bloc/bloc.dart';
 import 'package:parc/blocs/timer_bloc/bloc.dart';
 import 'package:parc/models/user.dart';
 import 'package:parc/widgets/parcade_modal.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'dart:async';
+import 'dart:math';
+import '../blocs/areas_bloc/bloc.dart';
+import '../blocs/balance_bloc/bloc.dart';
+import '../models/area.dart';
+
+List<String> matches;
+
+List<Area> areasList;
+
+class BackendService {
+  static Future<List> getSuggestions(String query) async {
+    await Future.delayed(Duration(seconds: 1));
+    List<Area> matches = List();
+
+    matches.addAll(areasList);
+
+    matches.retainWhere((s) => s.name.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+}
 
 class MapScreen extends StatelessWidget {
+
   final User _user;
-  final TextEditingController _searchController = TextEditingController();
+  final SuggestionsBoxController _searchController = SuggestionsBoxController();
 
   MapScreen(this._user);
 
@@ -39,11 +64,36 @@ class MapScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search ...',
-              ),
-              controller: _searchController,
+              BlocBuilder<AreasBloc, AreasState>(
+                // ignore: missing_return
+                builder: (context, state) {
+                  if (state is AreasLoaded) {
+                    return TypeAheadField(
+                      suggestionsBoxController: _searchController,
+                      textFieldConfiguration: TextFieldConfiguration(
+                          autofocus: true,
+                          style: DefaultTextStyle.of(context).style.copyWith(fontStyle: FontStyle.italic),
+                          decoration:
+                              InputDecoration(border: OutlineInputBorder())),
+                      suggestionsCallback: (pattern) async {
+                        areasList = state.areas;
+                        return BackendService.getSuggestions(pattern);
+                      },
+                      onSuggestionSelected:(suggestion){print('ana hena');},
+                      itemBuilder: (context, suggestion) {
+                        return ListTile(
+                          leading: Icon(Icons.place),
+                          title: Text(suggestion.name),
+                          onTap: (){},
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
             ),
             SizedBox(
               height: 18,
