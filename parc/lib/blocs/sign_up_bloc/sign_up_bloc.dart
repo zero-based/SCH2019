@@ -67,7 +67,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     );
   }
 
-  Stream<SignUpState> _mapFormSubmittedToState({
+   Stream<SignUpState> _mapFormSubmittedToState({
     String name,
     String email,
     String password,
@@ -80,6 +80,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         email: email,
         password: password,
         license: license,
+        balance: 0.0
       );
       yield SignUpState.success();
     } catch (_) {

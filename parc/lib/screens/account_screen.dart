@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parc/blocs/authentication_bloc/bloc.dart';
+import 'package:parc/blocs/balance_bloc/balance_bloc.dart';
+import 'package:parc/widgets/balance_dialog.dart';
 
+import '../blocs/balance_bloc/balance_event.dart';
 import '../models/user.dart';
 
 import '../widgets/modal_sheet.dart';
@@ -16,6 +19,14 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  TextEditingController _amountController = new TextEditingController();
+  BalanceBloc _balanceBloc;
+  @override
+  void initState() {
+    super.initState();
+    _balanceBloc = BlocProvider.of<BalanceBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +78,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 SizedBox(height: 32),
                 Container(
                   child: Text(
-                    "Balance",
+                    "${_balanceBloc.state}",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30.0,
@@ -121,7 +132,23 @@ class _AccountScreenState extends State<AccountScreen> {
           color: Theme.of(context).primaryIconTheme.color,
           size: 28,
         ),
-        onPressed: () {},
+        onPressed: () {
+          showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return BalanceDialog(
+                amountController: _amountController,
+                onPressed: () {
+                  _balanceBloc.add(Recharge(
+                      double.parse(_amountController.text) +
+                          widget._user.balance));
+                  _amountController.clear();
+                  Navigator.of(context).pop();
+                },
+              );
+            },
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
