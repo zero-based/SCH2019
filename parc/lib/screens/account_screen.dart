@@ -20,12 +20,6 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   TextEditingController _amountController = new TextEditingController();
-  BalanceBloc _balanceBloc;
-  @override
-  void initState() {
-    super.initState();
-    _balanceBloc = BlocProvider.of<BalanceBloc>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +72,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 SizedBox(height: 32),
                 Container(
                   child: Text(
-                    "${_balanceBloc.state}",
+                    "${widget._user.balance}",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30.0,
@@ -139,7 +133,7 @@ class _AccountScreenState extends State<AccountScreen> {
               return BalanceDialog(
                 amountController: _amountController,
                 onPressed: () {
-                  _balanceBloc.add(Recharge(
+                  BlocProvider.of<BalanceBloc>(context).add(Recharge(
                       double.parse(_amountController.text) +
                           widget._user.balance));
                   _amountController.clear();
