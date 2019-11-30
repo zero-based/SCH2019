@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parc/blocs/balance_bloc/balance_bloc.dart';
 import 'package:parc/util/theme.dart';
 
+import 'blocs/areas_bloc/areas_bloc.dart';
+import 'blocs/areas_bloc/areas_event.dart';
 import 'blocs/authentication_bloc/bloc.dart';
 import 'blocs/map_bloc/bloc.dart';
 import 'blocs/reservation_bloc/bloc.dart';
@@ -38,6 +40,9 @@ class App extends StatelessWidget {
                 BlocProvider<MapBloc>(
                   create: (context) => MapBloc()..add(LoadCurrent()),
                 ),
+                BlocProvider<AreasBloc>(
+                  create: (context) => AreasBloc()..add(LoadAreas()),
+                ),
                 BlocProvider<BalanceBloc>(
                   create: (context) => BalanceBloc(state.user),
                 ),
@@ -47,7 +52,8 @@ class App extends StatelessWidget {
                 ),
                 BlocProvider<TimerBloc>(
                   create: (context) => TimerBloc(),
-                )
+                ),
+
               ],
               child: HomeScreen(state.user),
             );
