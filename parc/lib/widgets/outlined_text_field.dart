@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:parc/util/theme.dart';
 
 class OutlinedTextField extends StatelessWidget {
   final String text;
@@ -53,14 +54,14 @@ class OutlinedTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
+              color: appThemeData[AppTheme.Gredient].primaryColorDark,
               width: 2.5,
               style: BorderStyle.solid),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
-              color: Theme.of(context).highlightColor,
+              color: appThemeData[AppTheme.Gredient].primaryColor,
               width: 2.5,
               style: BorderStyle.solid),
         ),

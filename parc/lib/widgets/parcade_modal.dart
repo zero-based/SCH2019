@@ -22,6 +22,7 @@ class ParcadeModal extends StatelessWidget {
               style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Almarai'
               ),
             ),
             Text(
@@ -29,6 +30,7 @@ class ParcadeModal extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
+                  fontFamily: 'Almarai'
               ),
             ),
             SizedBox(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:parc/blocs/reservation_bloc/bloc.dart';
 import 'package:parc/blocs/timer_bloc/bloc.dart';
-import 'package:parc/widgets/water_wave.dart';
 import 'package:parc/models/reservation.dart';
+import 'package:parc/util/theme.dart';
+import 'package:parc/widgets/water_wave.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/rounded_button.dart';
@@ -16,12 +18,21 @@ class TripScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Trip"),
+      appBar: GradientAppBar(
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/logo_white.png',
+            fit: BoxFit.contain,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColorStart: appThemeData[AppTheme.Gredient].primaryColor,
+        backgroundColorEnd: appThemeData[AppTheme.Gredient].primaryColorDark,
         leading: IconButton(
           icon: new Icon(
             Icons.close,
-            color: Colors.white,
+            color: Colors.blue[50],
             size: 32,
           ),
           onPressed: () {
@@ -61,7 +72,6 @@ class TripScreen extends StatelessWidget {
                                   fontSize: 50,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
-                              
                             ),
                           ),
                         ],
@@ -76,7 +86,8 @@ class TripScreen extends StatelessWidget {
             SizedBox(height: 30),
             RoundedButton(
               text: 'Lower Parcade',
-              onPressed: () => BlocProvider.of<ReservationBloc>(context).add(Arrive(reservation)),
+              onPressed: () => BlocProvider.of<ReservationBloc>(context)
+                  .add(Arrive(reservation)),
             ),
           ],
         ),

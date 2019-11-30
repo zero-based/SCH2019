@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parc/blocs/authentication_bloc/bloc.dart';
 import 'package:parc/blocs/balance_bloc/balance_bloc.dart';
+import 'package:parc/util/theme.dart';
 import 'package:parc/widgets/balance_dialog.dart';
 
 import '../blocs/balance_bloc/balance_event.dart';
@@ -33,8 +34,8 @@ class _AccountScreenState extends State<AccountScreen> {
               children: <Widget>[
                 Icon(
                   Icons.account_circle,
-                  color: Theme.of(context).iconTheme.color,
-                  size: 100,
+                  color: appThemeData[AppTheme.Gredient].primaryColorDark,
+                  size: 96,
                 ),
                 SizedBox(height: 16),
                 Container(
@@ -42,8 +43,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Text(
                     " ${widget._user.name}",
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30.0,
+                      color: appThemeData[AppTheme.Gredient].primaryColorDark,
+                      fontSize: 32.0,
                     ),
                   ),
                 ),
@@ -51,10 +52,10 @@ class _AccountScreenState extends State<AccountScreen> {
                 Container(
                   alignment: Alignment.topCenter,
                   child: Text(
-                    " ${widget._user.email}",
+                    "${widget._user.email}",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 15.0,
+                      fontSize: 16.0,
                     ),
                   ),
                 ),
@@ -65,17 +66,19 @@ class _AccountScreenState extends State<AccountScreen> {
                     " ${widget._user.license}",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 15.0,
+                      fontSize: 16.0,
                     ),
                   ),
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 88),
                 Container(
                   child: Text(
-                    "${widget._user.balance}",
+                    "${widget._user.balance} ¤",
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30.0,
+                      color: appThemeData[AppTheme.Gredient].primaryColorDark,
+                      fontSize: 64.0,
+                      fontFamily: 'Almarai',
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 ),

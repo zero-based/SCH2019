@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:parc/blocs/reservation_bloc/bloc.dart';
 import 'package:parc/screens/trip_screen.dart';
+import 'package:parc/util/theme.dart';
 
 import '../models/user.dart';
 import 'account_screen.dart';
@@ -18,8 +21,19 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is Free) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Parc'),
+            appBar: GradientAppBar(
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'assets/logo_white.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              centerTitle: true,
+              backgroundColorStart:
+                  appThemeData[AppTheme.Gredient].primaryColor,
+              backgroundColorEnd:
+                  appThemeData[AppTheme.Gredient].primaryColorDark,
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.settings),

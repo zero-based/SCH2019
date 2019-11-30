@@ -17,9 +17,34 @@ dependencies:
   google_maps_flutter: 0.5.15+1
   geolocator: ^5.1.5
   url_launcher: ^5.2.7
+  flare_flutter: ^1.7.3
+  flutter_launcher_icons: ^0.7.0
+  gradient_app_bar: ^0.0.1
   wave: ^0.0.8
 
 flutter:
   uses-material-design: true
   assets:
     - assets/logo.png
+    - assets/parcinout.flr
+    - assets/parcupdown.flr
+    - assets/logo_white.png
+  fonts:
+    - family: Almarai
+      fonts:
+        - asset: assets/fonts/Almarai-Light.ttf
+          weight: 200
+        - asset: assets/fonts/Almarai-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Almarai-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Almarai-ExtraBold.ttf
+          weight: 900
+          
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"

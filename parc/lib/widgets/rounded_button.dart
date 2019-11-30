@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parc/util/theme.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
@@ -14,39 +15,49 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonTheme(
-      splashColor: Theme.of(context).primaryColorLight,
+      splashColor: appThemeData[AppTheme.Gredient].splashColor,
       minWidth: 180.0,
-      child: RaisedButton(
-        color: outlined
-            ? Theme.of(context).backgroundColor
-            : Theme.of(context).primaryColor,
-        textColor: Colors.white,
-        textTheme: ButtonTextTheme.accent,
-        elevation: 0,
-        onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          side: outlined
-              ? BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2.5,
-                  style: BorderStyle.solid,
-                )
-              : BorderSide.none,
+      child: Container(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 16.0,
+          gradient: LinearGradient(
+            colors: <Color>[
+              appThemeData[AppTheme.Gredient].primaryColor,
+              appThemeData[AppTheme.Gredient].primaryColorDark,
+            ],
           ),
-          child: Text(
-            text,
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: outlined
-                    ? Theme.of(context).textTheme.button.color
-                    : Colors.white),
+        ),
+        child: RaisedButton(
+          color: outlined ? Colors.white : Colors.transparent,
+          textColor: Colors.white,
+          textTheme: ButtonTextTheme.accent,
+          elevation: 0,
+          onPressed: onPressed,
+          shape: RoundedRectangleBorder(
+            side: outlined
+                ? BorderSide(
+                    color: appThemeData[AppTheme.Gredient].primaryColorDark,
+                    width: 2.5,
+                    style: BorderStyle.solid,
+                  )
+                : BorderSide.none,
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.0,
+              vertical: 16.0,
+            ),
+            child: Text(
+              text.toUpperCase(),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Almarai',
+                  color: outlined
+                      ? appThemeData[AppTheme.Gredient].textTheme.button.color
+                      : Colors.white),
+            ),
           ),
         ),
       ),
