@@ -28,7 +28,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     // TODO: REMOVE THIS PARCADE
     var dummyParcade = Parcade(
-        id: "DUMMY",
+        id: "sA3vub5Fuq8pzZuGJn0w",
         latLng: latLng,
         isAvailable: true,
         area: "Cairo",

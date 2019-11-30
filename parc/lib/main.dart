@@ -5,6 +5,8 @@ import 'package:parc/blocs/balance_bloc/balance_bloc.dart';
 
 import 'blocs/authentication_bloc/bloc.dart';
 import 'blocs/map_bloc/bloc.dart';
+import 'blocs/reservation_bloc/bloc.dart';
+import 'blocs/timer_bloc/timer_bloc.dart';
 import 'screens/home_screen.dart';
 import 'screens/sign_in_screen.dart';
 import 'screens/splash_screen.dart';
@@ -34,7 +36,14 @@ class App extends StatelessWidget {
                   create: (context) => MapBloc()..add(LoadCurrent()),
                 ),
                 BlocProvider<BalanceBloc>(
-                    create: (context) => BalanceBloc(state.user))
+                    create: (context) => BalanceBloc(state.user),),
+                BlocProvider<ReservationBloc>(
+                  create: (context) => ReservationBloc()
+                    ..add(Fetch(state.user.currentReservation)),
+                ),
+                BlocProvider<TimerBloc>(
+                  create: (context) => TimerBloc(),
+                )
               ],
               child: HomeScreen(state.user),
             );

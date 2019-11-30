@@ -2,23 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:parc/blocs/map_bloc/bloc.dart';
+import 'package:parc/blocs/reservation_bloc/bloc.dart';
+import 'package:parc/blocs/timer_bloc/bloc.dart';
+import 'package:parc/models/user.dart';
 import 'package:parc/widgets/parcade_modal.dart';
 
 class MapScreen extends StatelessWidget {
+  final User _user;
   final TextEditingController _searchController = TextEditingController();
 
+  MapScreen(this._user);
+
   @override
-  Widget build(BuildContext context) {
-    // Hardcoded Data
+  Widget build(BuildContext parentContext) {
     return BlocListener<MapBloc, MapState>(
       listener: (context, state) {
         if (state.openModal) {
           var future = showModalBottomSheet(
-            context: context,
-            builder: (context) => ParcadeModal(state.tappedParcade),
+            context: parentContext,
+            builder: (context) => ParcadeModal(
+              parcade: state.tappedParcade,
+              onPressed: () {
+                BlocProvider.of<ReservationBloc>(parentContext)
+                    .add(Reserve(state.tappedParcade, _user.id));
+                BlocProvider.of<TimerBloc>(parentContext).add(Start());
+                Navigator.pop(parentContext); // Close Modal
+              },
+            ),
           );
           future.then(
-            (v) => BlocProvider.of<MapBloc>(context).add(UnTapMarker()),
+            (v) => BlocProvider.of<MapBloc>(parentContext).add(UnTapMarker()),
           );
         }
       },
