@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parc/blocs/balance_bloc/balance_bloc.dart';
 
 import 'blocs/authentication_bloc/bloc.dart';
 import 'blocs/map_bloc/bloc.dart';
@@ -13,9 +14,7 @@ void main() {
   BlocSupervisor.delegate = AppBlocDelegate();
   runApp(
     BlocProvider(
-      create: (context) =>
-      AuthenticationBloc()
-        ..add(AppStarted()),
+      create: (context) => AuthenticationBloc()..add(AppStarted()),
       child: App(),
     ),
   );
@@ -33,7 +32,9 @@ class App extends StatelessWidget {
               providers: [
                 BlocProvider<MapBloc>(
                   create: (context) => MapBloc()..add(LoadCurrent()),
-                )
+                ),
+                BlocProvider<BalanceBloc>(
+                    create: (context) => BalanceBloc(state.user))
               ],
               child: HomeScreen(state.user),
             );

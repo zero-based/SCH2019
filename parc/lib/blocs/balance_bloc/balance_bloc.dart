@@ -13,7 +13,7 @@ class BalanceBloc extends Bloc<BalanceEvent, double> {
   BalanceBloc(this.user);
 
   @override
-  double get initialState => user.balance;
+  double get initialState => 0;
 
   @override
   Stream<double> mapEventToState(BalanceEvent event) async* {
