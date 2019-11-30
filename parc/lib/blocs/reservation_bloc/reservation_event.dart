@@ -33,6 +33,16 @@ class Arrive extends ReservationEvent {
   List<Object> get props => [reservation];
 }
 
+class Update extends ReservationEvent {
+  final Reservation reservation;
+
+  Update(this.reservation);
+
+  @override
+  List<Object> get props => [reservation];
+}
+
+
 class Cancel extends ReservationEvent {
   final Reservation reservation;
 
