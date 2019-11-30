@@ -5,27 +5,28 @@ class User {
   String name;
   String email;
   String license;
-  String currentReservation;
+  double balance;
 
-  User({
-    this.id,
-    this.name,
-    this.email,
-    this.license,
-    this.currentReservation,
-  });
+  User({this.id, this.name, this.email, this.license, this.balance});
 
   factory User.fromDocument(DocumentSnapshot doc) {
     return User(
-        id: doc['id'],
-        name: doc['name'],
-        email: doc['email'],
-        license: doc['license'],
-        currentReservation: doc['currentReservation']);
+      id: doc['id'],
+      name: doc['name'],
+      email: doc['email'],
+      license: doc['license'],
+      balance: doc['balance'].toDouble(),
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name, 'email': email, 'license': license, 'currentReservation': currentReservation};
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'license': license,
+      'balance': balance
+    };
   }
 
   @override
@@ -35,7 +36,7 @@ class User {
       name: $name,
       email: $email,
       license: $license,
-      currentReservation: $currentReservation
+      balance: $balance,
     }''';
   }
 }

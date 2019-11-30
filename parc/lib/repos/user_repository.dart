@@ -18,7 +18,7 @@ class UserRepository {
     String email,
     String password,
     String license,
-    String currentReservation
+    double balance,
   }) async {
     // Account
     await _auth.createUserWithEmailAndPassword(
@@ -33,7 +33,7 @@ class UserRepository {
       name: name,
       email: email,
       license: license,
-      currentReservation: ""
+      balance: balance,
     );
     return await docRef.setData(user.toMap());
   }
@@ -55,5 +55,16 @@ class UserRepository {
         .getDocuments();
     var doc = query.documents[0];
     return User.fromDocument(doc);
+  }
+
+  static void setBalance(double balance, User user) async {
+    WriteBatch batch = Firestore.instance.batch();
+    var query  = await _db.collection('users').where("email", isEqualTo:user.email).getDocuments();
+    print(query.documents[0].documentID);
+    batch.updateData(_db.collection('users').document(query.documents[0].documentID), {
+      "balance": balance, 
+    });
+
+    batch.commit();
   }
 }
