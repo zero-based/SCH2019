@@ -6,8 +6,16 @@ class User {
   String email;
   String license;
   double balance;
+  String currentReservation;
 
-  User({this.id, this.name, this.email, this.license, this.balance});
+  User({
+    this.id,
+    this.name,
+    this.email,
+    this.license,
+    this.balance,
+    this.currentReservation,
+  });
 
   factory User.fromDocument(DocumentSnapshot doc) {
     return User(
@@ -16,6 +24,7 @@ class User {
       email: doc['email'],
       license: doc['license'],
       balance: doc['balance'].toDouble(),
+      currentReservation: doc['currentReservation']
     );
   }
 
@@ -25,7 +34,8 @@ class User {
       'name': name,
       'email': email,
       'license': license,
-      'balance': balance
+      'balance': balance,
+      'currentReservation': ""
     };
   }
 
@@ -37,6 +47,7 @@ class User {
       email: $email,
       license: $license,
       balance: $balance,
+      currentReservation: $currentReservation
     }''';
   }
 }

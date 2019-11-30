@@ -1,20 +1,16 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import '../../models/ticker.dart';
+
+import '../../util/ticker.dart';
 import 'bloc.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  final Ticker _ticker;
-  final int _duration = 15*60;
-
+  static const INTERVAL = 15 * 60;
   StreamSubscription<int> _tickerSubscription;
 
-  TimerBloc(Ticker ticker)
-      : assert(ticker != null),
-        _ticker = ticker;
-
   @override
-  TimerState get initialState => Ready(_duration);
+  TimerState get initialState => Ready(INTERVAL);
 
   @override
   void onTransition(Transition<TimerEvent, TimerState> transition) {
@@ -27,36 +23,36 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     TimerEvent event,
   ) async* {
     if (event is Start) {
-      yield* _mapStartToState(event);
-    } else if (event is Reset) {
-      yield* _mapResetToState(event);
+      yield* _mapStartToState(event.duration);
     } else if (event is Tick) {
-      yield* _mapTickToState(event);
+      yield* _mapTickToState(event.duration);
+    } else if (event is Reset) {
+      yield* _mapResetToState();
     }
   }
 
- /* @override
-  void dispose() {
+  Stream<TimerState> _mapStartToState(int duration) async* {
+    yield Running(duration);
     _tickerSubscription?.cancel();
-    super.dispose();
-  }*/
-
-  Stream<TimerState> _mapStartToState(Start start) async* {
-    yield Running(start.duration);
-    _tickerSubscription?.cancel();
-    _tickerSubscription = _ticker.tick(ticks: start.duration).listen(
+    _tickerSubscription = Ticker.tick(ticks: duration).listen(
       (duration) {
         add(Tick(duration: duration));
       },
     );
   }
 
-  Stream<TimerState> _mapResetToState(Reset reset) async* {
-    _tickerSubscription?.cancel();
-    yield Ready(_duration);
+  Stream<TimerState> _mapTickToState(int duration) async* {
+    yield duration > 0 ? Running(duration) : Finished();
   }
 
-  Stream<TimerState> _mapTickToState(Tick tick) async* {
-    yield tick.duration > 0 ? Running(tick.duration) : Finished();
+  Stream<TimerState> _mapResetToState() async* {
+    _tickerSubscription?.cancel();
+    yield Ready(INTERVAL);
+  }
+
+  @override
+  Future<void> close() async {
+    _tickerSubscription?.cancel();
+    await super.close();
   }
 }

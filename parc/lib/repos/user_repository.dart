@@ -34,6 +34,7 @@ class UserRepository {
       email: email,
       license: license,
       balance: balance,
+      currentReservation: "",
     );
     return await docRef.setData(user.toMap());
   }
@@ -60,7 +61,6 @@ class UserRepository {
   static void setBalance(double balance, User user) async {
     WriteBatch batch = Firestore.instance.batch();
     var query  = await _db.collection('users').where("email", isEqualTo:user.email).getDocuments();
-    print(query.documents[0].documentID);
     batch.updateData(_db.collection('users').document(query.documents[0].documentID), {
       "balance": balance, 
     });

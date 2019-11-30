@@ -1,32 +1,42 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:parc/models/parcade.dart';
 
 class Reservation {
-  final String id;
-  final String userId;
-  final String parcadeId;
-  final bool arrived;
-  final Timestamp reservationTimestamp;
-  final Timestamp arrivalTimestamp;
-  final Timestamp cancelationTimestamp;
+  String id;
+  String userId;
+  Parcade parcade;
+  Timestamp reservedOn;
+  Timestamp arrivedOn;
+  Timestamp canceledOn;
 
-  Reservation(
-      {this.id,
-      this.userId,
-      this.parcadeId,
-      this.arrived,
-      this.reservationTimestamp,
-      this.arrivalTimestamp,
-      this.cancelationTimestamp});
+  Reservation({
+    this.id,
+    this.userId,
+    this.parcade,
+    this.reservedOn,
+    this.arrivedOn,
+    this.canceledOn,
+  });
+
+  factory Reservation.fromDocument(DocumentSnapshot doc) {
+    return Reservation(
+      id: doc['id'],
+      userId: doc['userId'],
+      parcade: Parcade(id: doc['parcadeId']),
+      reservedOn: doc['reservedOn'],
+      arrivedOn: doc['arrivedOn'],
+      canceledOn: doc['canceledOn'],
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'userId': userId,
-      'parcadeId': parcadeId,
-      'arrived': arrived,
-      'reservationTimestamp': reservationTimestamp,
-      'arrivalTimestamp': arrivalTimestamp,
-      'cancelationTimestamp': cancelationTimestamp
+      'parcadeId': parcade.id,
+      'reservedOn': reservedOn,
+      'arrivedOn': arrivedOn,
+      'canceledOn': canceledOn
     };
   }
 
@@ -35,11 +45,10 @@ class Reservation {
     return '''Reservation{
       'id': $id,
       'userId': $userId,
-      'parcadeId': $parcadeId,
-      'arrived': $arrived,
-      'reservationTimestamp': $reservationTimestamp,
-      'arrivalTimestamp': $arrivalTimestamp,
-      'cancelationTimestamp': $cancelationTimestamp
+      'parcade': $parcade,
+      'reservedOn': $reservedOn,
+      'arrivedOn': $arrivedOn,
+      'canceledOn': $canceledOn
     }''';
   }
 }

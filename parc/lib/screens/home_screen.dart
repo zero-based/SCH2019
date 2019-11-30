@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parc/blocs/reservation_bloc/bloc.dart';
+import 'package:parc/screens/trip_screen.dart';
 
 import '../models/user.dart';
 import 'account_screen.dart';
@@ -11,22 +14,38 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Parc'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AccountScreen(_user),
-              ),
+    return BlocBuilder<ReservationBloc, ReservationState>(
+      builder: (context, state) {
+        if (state is Free) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Parc'),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () => _navigateToAccountScreen(context),
+                ),
+              ],
             ),
-          ),
-        ],
+            body: MapScreen(_user),
+          );
+        } else if (state is Reserved) {
+          return TripScreen(reservation: state.reservation);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  void _navigateToAccountScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AccountScreen(_user),
       ),
-      body: MapScreen(),
     );
   }
 }

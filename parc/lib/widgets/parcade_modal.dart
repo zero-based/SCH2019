@@ -4,8 +4,9 @@ import 'package:parc/widgets/rounded_button.dart';
 
 class ParcadeModal extends StatelessWidget {
   final Parcade parcade;
+  final VoidCallback onPressed;
 
-  ParcadeModal(this.parcade);
+  ParcadeModal({this.parcade, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class ParcadeModal extends StatelessWidget {
             ),
             RoundedButton(
               text: "Reserve",
+              onPressed: onPressed,
             )
           ],
         ),
