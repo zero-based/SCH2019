@@ -17,6 +17,7 @@ dependencies:
   google_maps_flutter: 0.5.15+1
   geolocator: ^5.1.5
   url_launcher: ^5.2.7
+  wave: ^0.0.8
 
 flutter:
   uses-material-design: true
