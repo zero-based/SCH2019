@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parc/blocs/timer_bloc/bloc.dart';
 import 'package:parc/models/ticker.dart';
+import 'package:parc/widgets/water_wave.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../widgets/rounded_button.dart';
 
@@ -30,11 +31,13 @@ class _TripScreenState extends State<_TripScreen> {
       appBar: AppBar(
         title: Text("Trip"),
         leading: IconButton(
-            icon: new Icon(
-          Icons.close,
-          color: Colors.white,
-          size: 32,
-        ), onPressed: () => _timerBloc.add(Reset()),),
+          icon: new Icon(
+            Icons.close,
+            color: Colors.white,
+            size: 32,
+          ),
+          onPressed: () => _timerBloc.add(Reset()),
+        ),
       ),
       body: Center(
         child: Column(
@@ -50,9 +53,31 @@ class _TripScreenState extends State<_TripScreen> {
                     .padLeft(2, '0');
                 final String secondsStr =
                     (state.duration % 60).floor().toString().padLeft(2, '0');
-                return Text(
-                  '$minutesStr:$secondsStr',
-                  style: TextStyle(fontSize: 32),
+                return Container(
+                  height: 200,
+                  width: 200,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: Stack(children: [
+                      Background(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              '$minutesStr:$secondsStr',
+                              style: TextStyle(
+                                  fontSize: 50,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                              
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
                 );
               },
             ),
@@ -60,9 +85,9 @@ class _TripScreenState extends State<_TripScreen> {
             RoundedButton(text: 'Open Google Maps', onPressed: _launchURL),
             SizedBox(height: 30),
             RoundedButton(
-                text: 'Lower Parcade',
-                onPressed: () => _timerBloc.add(Start(duration: 15*60)),                  
-                ),
+              text: 'Lower Parcade',
+              onPressed: () => _timerBloc.add(Start(duration: 15 * 60)),
+            ),
           ],
         ),
       ),
