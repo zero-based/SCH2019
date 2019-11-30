@@ -32,9 +32,22 @@
     var socket = io();
     socket.on("newReservation", function (data) {
       console.log(data);
-      $("h1").text(data.id);
+      $("h1").text("Parcade Reserved");
       $("body").css("background", data.color);
     });
+
+    socket.on("arrival", function (data) {
+      console.log(data);
+      $("h1").text("User Arrived");
+      $("body").css("background", data.color);
+    });
+
+    socket.on("userLeftParcade", function (data) {
+      console.log(data);
+      $("h1").text("Freeeedoooom!");
+      $("body").css("background", data.color);
+    });
+
   </script>
 
 </body>
