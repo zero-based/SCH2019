@@ -5,6 +5,9 @@ const socket = io(`http://localhost:${process.env.PORT}/`);
 const board = new five.Board();
 let ignoreIr: Boolean = true;
 let parked: Boolean = false;
+let userId: String = "";
+let reservationId: String = "";
+let parcadeId: String = "";
 
 board.on("ready", function () {
     const greenLed = new five.Led(2);
@@ -14,6 +17,16 @@ board.on("ready", function () {
     redLed.off();
 
     /* Socket Callbacks */
+    socket.on("newReservation", function (data: any) {
+        console.log(data);
+        greenLed.off();
+        redLed.on();
+        //TODO: Parcade up here.
+
+        userId = data["userId"];
+        reservationId  = data["reservationId"];
+        parcadeId = data["parcadeId"];
+    });
 
     socket.on("arrival", function (data: any) {
         console.log(data);
@@ -22,14 +35,6 @@ board.on("ready", function () {
         ignoreIr = false;
         //TODO: Parcade down here.
     });
-
-    socket.on("newReservation", function (data: any) {
-        console.log(data);
-        greenLed.off();
-        redLed.on();
-        //TODO: Parcade up here.
-    });
-
 
     /* IR Sensor Callbacks */
 
@@ -46,13 +51,14 @@ board.on("ready", function () {
     */
     motion.on("motionstart", function () {
         if (parked) {
-            console.log("motionstart", Date.now());
             // Left spot
+            console.log("motionstart", Date.now());
             greenLed.on();
             redLed.off();
             ignoreIr = true;
             parked = false;
-            // motor up
+            //TODO: Parcade up here.
+            socket.emit('userLeft', { userId, reservationId, parcadeId });
         }
     });
 
@@ -63,6 +69,7 @@ board.on("ready", function () {
     motion.on("motionend", function () {
         if (!ignoreIr) {
             parked = true;
+            ignoreIr = false;
             console.log("motionend", Date.now());
         }
     });
