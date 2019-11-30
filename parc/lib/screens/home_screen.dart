@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:parc/blocs/reservation_bloc/bloc.dart';
+import 'package:parc/screens/parking_screen.dart';
 import 'package:parc/screens/trip_screen.dart';
 import 'package:parc/util/theme.dart';
 
@@ -45,6 +46,8 @@ class HomeScreen extends StatelessWidget {
           );
         } else if (state is Reserved) {
           return TripScreen(reservation: state.reservation);
+        } else if (state is Parked) {
+          return ParkingScreen(reservation: state.reservation);
         } else {
           return Center(
             child: CircularProgressIndicator(),

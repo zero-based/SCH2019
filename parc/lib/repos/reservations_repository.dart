@@ -5,14 +5,20 @@ import 'package:parc/models/reservation.dart';
 class ReservationRepository {
   static final Firestore _db = Firestore.instance;
 
-  static Future<Reservation> get(String reservationId) async {
-    var reservationDoc =
-        await _db.collection("reservations").document(reservationId).get();
-    var reservation = Reservation.fromDocument(reservationDoc);
-    var parcadeDoc =
-        await _db.collection("parcades").document(reservation.parcade.id).get();
-    reservation.parcade = Parcade.fromDocument(parcadeDoc);
-    return reservation;
+  static Stream<Future<Reservation>> get(String reservationId) {
+    return _db
+        .collection("reservations")
+        .document(reservationId)
+        .snapshots()
+        .map((doc) async {
+      var reservation = Reservation.fromDocument(doc);
+      var parcadeDoc = await _db
+          .collection("parcades")
+          .document(reservation.parcade.id)
+          .get();
+      reservation.parcade = Parcade.fromDocument(parcadeDoc);
+      return reservation;
+    });
   }
 
   static Future<void> make(Reservation reservation) {

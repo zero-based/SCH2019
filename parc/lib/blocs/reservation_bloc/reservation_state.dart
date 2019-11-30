@@ -19,6 +19,15 @@ class Reserved extends ReservationState {
   List<Object> get props => [reservation];
 }
 
+class Parked extends ReservationState {
+  final Reservation reservation;
+
+  Parked(this.reservation);
+
+  @override
+  List<Object> get props => [reservation];
+}
+
 class Free extends ReservationState {
   @override
   List<Object> get props => [];

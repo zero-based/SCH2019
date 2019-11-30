@@ -8,6 +8,7 @@ class Reservation {
   Timestamp reservedOn;
   Timestamp arrivedOn;
   Timestamp canceledOn;
+  Timestamp leftOn;
 
   Reservation({
     this.id,
@@ -16,6 +17,7 @@ class Reservation {
     this.reservedOn,
     this.arrivedOn,
     this.canceledOn,
+    this.leftOn,
   });
 
   factory Reservation.fromDocument(DocumentSnapshot doc) {
@@ -26,6 +28,7 @@ class Reservation {
       reservedOn: doc['reservedOn'],
       arrivedOn: doc['arrivedOn'],
       canceledOn: doc['canceledOn'],
+      leftOn: doc['leftOn'],
     );
   }
 
@@ -36,7 +39,8 @@ class Reservation {
       'parcadeId': parcade.id,
       'reservedOn': reservedOn,
       'arrivedOn': arrivedOn,
-      'canceledOn': canceledOn
+      'canceledOn': canceledOn,
+      'leftOn': leftOn
     };
   }
 
@@ -49,6 +53,7 @@ class Reservation {
       'reservedOn': $reservedOn,
       'arrivedOn': $arrivedOn,
       'canceledOn': $canceledOn
+      'leftOn': $leftOn
     }''';
   }
 }
