@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parc/util/theme.dart';
 import 'package:wave/wave.dart';
 import 'package:wave/config.dart';
 
@@ -31,7 +32,7 @@ class Background extends StatelessWidget {
       ),
       size: Size(double.infinity, double.infinity),
       waveAmplitude: 25,
-      backgroundColor: Colors.blue[50],
+      backgroundColor: appThemeData[AppTheme.Gredient].primaryColor,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -92,11 +93,12 @@ class _SignInFormState extends State<_SignInForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CircleAvatar(
-                    child: Image.asset('assets/logo.png'),
-                    backgroundColor: Colors.transparent,
-                    radius: 64,
-                  ),
+                  Container(
+                      height: 156,
+                      child: FlareActor("assets/parcinout.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.contain,
+                          animation: "inout")),
                   SizedBox(height: 48.0),
                   OutlinedTextField(
                     text: 'Email',

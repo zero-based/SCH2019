@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parc/blocs/balance_bloc/balance_bloc.dart';
+import 'package:parc/util/theme.dart';
 
 import 'blocs/authentication_bloc/bloc.dart';
 import 'blocs/map_bloc/bloc.dart';
@@ -27,6 +28,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Parc',
+      theme: appThemeData[AppTheme.Gredient],
+      debugShowCheckedModeBanner: false,
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is Authenticated) {
@@ -36,7 +39,8 @@ class App extends StatelessWidget {
                   create: (context) => MapBloc()..add(LoadCurrent()),
                 ),
                 BlocProvider<BalanceBloc>(
-                    create: (context) => BalanceBloc(state.user),),
+                  create: (context) => BalanceBloc(state.user),
+                ),
                 BlocProvider<ReservationBloc>(
                   create: (context) => ReservationBloc()
                     ..add(Fetch(state.user.currentReservation)),
